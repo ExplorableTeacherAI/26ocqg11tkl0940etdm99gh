@@ -36,6 +36,9 @@ function PizzaVisualization({
     const centerY = size / 2;
     const radius = size / 2 - 10;
 
+    // Unique ID for this pizza's pattern (to avoid conflicts when multiple pizzas on page)
+    const patternId = `stripe-pattern-${size}-${totalSlices}`;
+
     // Generate pizza slices
     const slices = [];
     const anglePerSlice = (2 * Math.PI) / totalSlices;
@@ -64,8 +67,8 @@ function PizzaVisualization({
             <path
                 key={i}
                 d={pathData}
-                fill={isColoured ? "#62D0AD" : "#f1f5f9"}
-                stroke="#94a3b8"
+                fill={isColoured ? `url(#${patternId})` : "#f8fafc"}
+                stroke="#1e293b"
                 strokeWidth="2"
                 className="transition-all duration-300"
             />
@@ -74,6 +77,28 @@ function PizzaVisualization({
 
     return (
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+            {/* Pattern definition for coloured slices - diagonal stripes for colour blind accessibility */}
+            <defs>
+                <pattern
+                    id={patternId}
+                    patternUnits="userSpaceOnUse"
+                    width="8"
+                    height="8"
+                    patternTransform="rotate(45)"
+                >
+                    {/* Base colour */}
+                    <rect width="8" height="8" fill="#62D0AD" />
+                    {/* Diagonal stripe for accessibility */}
+                    <line
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="8"
+                        stroke="#3da885"
+                        strokeWidth="3"
+                    />
+                </pattern>
+            </defs>
             {/* Pizza base circle */}
             <circle
                 cx={centerX}
@@ -95,7 +120,7 @@ function PizzaVisualization({
                 strokeWidth="3"
             />
             {/* Center dot */}
-            <circle cx={centerX} cy={centerY} r="4" fill="#94a3b8" />
+            <circle cx={centerX} cy={centerY} r="4" fill="#1e293b" />
         </svg>
     );
 }
