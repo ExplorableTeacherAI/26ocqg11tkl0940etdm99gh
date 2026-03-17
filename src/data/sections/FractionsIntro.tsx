@@ -11,7 +11,6 @@ import {
     InlineSpotColor,
     InlineLinkedHighlight,
 } from "@/components/atoms";
-import { InteractionHintSequence } from "@/components/atoms/visual/InteractionHint";
 import {
     getVariableInfo,
     numberPropsFromDefinition,
@@ -230,55 +229,43 @@ function ReactiveFractionParts() {
     const { simplifiedNum, simplifiedDen, isSimplified, specialName } = getSimplifiedFraction(actualNumerator, denominator);
 
     return (
-        <div className="relative">
-            <div className="flex flex-col items-center gap-4">
-                <div className="flex items-center justify-center gap-6">
-                    <FractionDisplay
-                        numerator={actualNumerator}
-                        denominator={denominator}
-                        highlightPart={highlight as "numerator" | "denominator" | ""}
-                        size="large"
-                    />
-                    {/* Show simplest form if different */}
-                    {!isSimplified && actualNumerator > 0 && (
-                        <>
-                            <div className="text-3xl text-slate-400">=</div>
-                            <FractionDisplay
-                                numerator={simplifiedNum}
-                                denominator={simplifiedDen}
-                                size="large"
-                            />
-                        </>
-                    )}
-                    <div className="text-4xl text-slate-400">=</div>
-                    <PizzaVisualization
-                        totalSlices={denominator}
-                        colouredSlices={actualNumerator}
-                        size={160}
-                    />
-                </div>
-                {/* Show special name or simplest form message */}
-                {specialName && (
-                    <div className="text-lg font-medium text-[#F7B23B]">
-                        That's {specialName}!
-                    </div>
+        <div className="flex flex-col items-center gap-4">
+            <div className="flex items-center justify-center gap-6">
+                <FractionDisplay
+                    numerator={actualNumerator}
+                    denominator={denominator}
+                    highlightPart={highlight as "numerator" | "denominator" | ""}
+                    size="large"
+                />
+                {/* Show simplest form if different */}
+                {!isSimplified && actualNumerator > 0 && (
+                    <>
+                        <div className="text-3xl text-slate-400">=</div>
+                        <FractionDisplay
+                            numerator={simplifiedNum}
+                            denominator={simplifiedDen}
+                            size="large"
+                        />
+                    </>
                 )}
-                {!isSimplified && !specialName && actualNumerator > 0 && (
-                    <div className="text-base text-slate-500">
-                        Simplest form: {simplifiedNum}/{simplifiedDen}
-                    </div>
-                )}
+                <div className="text-4xl text-slate-400">=</div>
+                <PizzaVisualization
+                    totalSlices={denominator}
+                    colouredSlices={actualNumerator}
+                    size={160}
+                />
             </div>
-            <InteractionHintSequence
-                hintKey="fraction-parts-drag"
-                steps={[
-                    {
-                        gesture: "drag-horizontal",
-                        label: "Drag the numbers to change",
-                        position: { x: "15%", y: "30%" },
-                    },
-                ]}
-            />
+            {/* Show special name or simplest form message */}
+            {specialName && (
+                <div className="text-lg font-medium text-[#F7B23B]">
+                    That's {specialName}!
+                </div>
+            )}
+            {!isSimplified && !specialName && actualNumerator > 0 && (
+                <div className="text-base text-slate-500">
+                    Simplest form: {simplifiedNum}/{simplifiedDen}
+                </div>
+            )}
         </div>
     );
 }
@@ -391,16 +378,6 @@ function ReactiveFractionExplorer() {
                     </div>
                 )}
             </div>
-            <InteractionHintSequence
-                hintKey="fraction-explorer-drag"
-                steps={[
-                    {
-                        gesture: "drag-horizontal",
-                        label: "Drag the numbers in the text above",
-                        position: { x: "50%", y: "85%" },
-                    },
-                ]}
-            />
         </div>
     );
 }
