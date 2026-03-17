@@ -77,26 +77,19 @@ function PizzaVisualization({
 
     return (
         <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-            {/* Pattern definition for coloured slices - diagonal stripes for colour blind accessibility */}
+            {/* Pattern definition for coloured slices - bold diagonal stripes for colour blind accessibility */}
             <defs>
                 <pattern
                     id={patternId}
                     patternUnits="userSpaceOnUse"
-                    width="8"
-                    height="8"
+                    width="10"
+                    height="10"
                     patternTransform="rotate(45)"
                 >
-                    {/* Base colour */}
-                    <rect width="8" height="8" fill="#62D0AD" />
-                    {/* Diagonal stripe for accessibility */}
-                    <line
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="8"
-                        stroke="#3da885"
-                        strokeWidth="3"
-                    />
+                    {/* Light stripe */}
+                    <rect width="10" height="10" fill="#a7f3d0" />
+                    {/* Dark bold stripe for high contrast */}
+                    <rect x="0" y="0" width="5" height="10" fill="#047857" />
                 </pattern>
             </defs>
             {/* Pizza base circle */}
