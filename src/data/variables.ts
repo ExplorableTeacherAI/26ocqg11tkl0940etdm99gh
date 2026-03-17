@@ -78,83 +78,122 @@ export interface VariableDefinition {
  */
 export const variableDefinitions: Record<string, VariableDefinition> = {
     // ========================================
-    // ADD YOUR VARIABLES HERE
+    // FRACTIONS LESSON VARIABLES
     // ========================================
 
-    // Uncomment and modify these examples for your lesson:
-
-    /*
-    // ─────────────────────────────────────────
-    // NUMBER - Use with sliders
-    // ─────────────────────────────────────────
-    myValue: {
-        defaultValue: 5,
+    // Section 1: Introduction - Pizza sharing
+    pizzaSlicesTotal: {
+        defaultValue: 4,
         type: 'number',
-        label: 'My Value',
-        description: 'A number that controls something',
-        unit: 'm',           // optional unit display
+        label: 'Total Pizza Slices',
+        description: 'How many equal pieces the pizza is cut into',
+        min: 2,
+        max: 8,
+        step: 1,
+        color: '#8E90F5',
+    },
+    pizzaSlicesColoured: {
+        defaultValue: 1,
+        type: 'number',
+        label: 'Coloured Slices',
+        description: 'How many slices are coloured (eaten/taken)',
+        min: 0,
+        max: 8,
+        step: 1,
+        color: '#62D0AD',
+    },
+
+    // Section 2: Parts of a fraction
+    numeratorExample: {
+        defaultValue: 3,
+        type: 'number',
+        label: 'Numerator',
+        description: 'The top number of the fraction',
+        min: 0,
+        max: 8,
+        step: 1,
+        color: '#62D0AD',
+    },
+    denominatorExample: {
+        defaultValue: 4,
+        type: 'number',
+        label: 'Denominator',
+        description: 'The bottom number of the fraction',
+        min: 1,
+        max: 8,
+        step: 1,
+        color: '#8E90F5',
+    },
+
+    // Section 3: Explorer
+    explorerNumerator: {
+        defaultValue: 2,
+        type: 'number',
+        label: 'Explorer Numerator',
+        description: 'Numerator in the explorer',
         min: 0,
         max: 10,
-        step: 0.5,
+        step: 1,
+        color: '#62D0AD',
+    },
+    explorerDenominator: {
+        defaultValue: 6,
+        type: 'number',
+        label: 'Explorer Denominator',
+        description: 'Denominator in the explorer',
+        min: 1,
+        max: 10,
+        step: 1,
+        color: '#8E90F5',
     },
 
-    // ─────────────────────────────────────────
-    // TEXT - Free text input
-    // ─────────────────────────────────────────
-    lessonTitle: {
-        defaultValue: 'My Lesson',
+    // Section 4: Quiz answers
+    answerNumeratorQuestion: {
+        defaultValue: '',
         type: 'text',
-        label: 'Lesson Title',
-        description: 'The title of your lesson',
-        placeholder: 'Enter a title...',
+        label: 'Numerator Answer',
+        description: 'Student answer for numerator identification',
+        placeholder: '?',
+        correctAnswer: '2',
+        color: '#62D0AD',
+    },
+    answerDenominatorQuestion: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Denominator Answer',
+        description: 'Student answer for denominator identification',
+        placeholder: '?',
+        correctAnswer: '5',
+        color: '#8E90F5',
+    },
+    answerFractionNumerator: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Fraction Numerator Answer',
+        description: 'Student answer for writing a fraction numerator',
+        placeholder: '?',
+        correctAnswer: '3',
+        color: '#62D0AD',
+    },
+    answerFractionDenominator: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Fraction Denominator Answer',
+        description: 'Student answer for writing a fraction denominator',
+        placeholder: '?',
+        correctAnswer: '8',
+        color: '#8E90F5',
     },
 
-    // ─────────────────────────────────────────
-    // SELECT - Dropdown with options
-    // ─────────────────────────────────────────
-    difficulty: {
-        defaultValue: 'medium',
-        type: 'select',
-        label: 'Difficulty',
-        description: 'The difficulty level of the lesson',
-        options: ['easy', 'medium', 'hard', 'expert'],
+    // Highlight variable for linked highlights
+    fractionHighlight: {
+        defaultValue: '',
+        type: 'text',
+        label: 'Active Highlight',
+        description: 'Currently highlighted fraction part',
+        color: '#F7B23B',
+        bgColor: 'rgba(247, 178, 59, 0.15)',
     },
-
-    // ─────────────────────────────────────────
-    // BOOLEAN - Toggle switch
-    // ─────────────────────────────────────────
-    showHints: {
-        defaultValue: true,
-        type: 'boolean',
-        label: 'Show Hints',
-        description: 'Toggle to show or hide hints',
-    },
-
-    // ─────────────────────────────────────────
-    // ARRAY - List of numbers
-    // ─────────────────────────────────────────
-    dataPoints: {
-        defaultValue: [1, 4, 9, 16, 25],
-        type: 'array',
-        label: 'Data Points',
-        description: 'Y-values for plotting a graph',
-    },
-
-    // ─────────────────────────────────────────
-    // OBJECT - Complex structured data
-    // ─────────────────────────────────────────
-    graphSettings: {
-        defaultValue: { 
-            xMin: -10, 
-            xMax: 10, 
-            showGrid: true 
-        },
-        type: 'object',
-        label: 'Graph Settings',
-        description: 'Configuration for the graph display',
-        schema: '{ xMin: number, xMax: number, showGrid: boolean }',
-    },
-    */
 };
 
 /**
