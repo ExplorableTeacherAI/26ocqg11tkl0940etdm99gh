@@ -153,6 +153,13 @@ function ReactivePizzaIntro() {
 // ============================================
 // FRACTION DISPLAY COMPONENT
 // ============================================
+// High-contrast colours for colour blind accessibility
+// Orange (#D97706) and Blue (#1D4ED8) are distinguishable by most colour blind users
+const NUMERATOR_COLOR = "#D97706"; // Orange - warm colour
+const NUMERATOR_BG = "rgba(217, 119, 6, 0.15)";
+const DENOMINATOR_COLOR = "#1D4ED8"; // Blue - cool colour
+const DENOMINATOR_BG = "rgba(29, 78, 216, 0.15)";
+
 function FractionDisplay({
     numerator,
     denominator,
@@ -173,21 +180,29 @@ function FractionDisplay({
     return (
         <div className={`flex flex-col items-center ${sizeClasses[size]} font-bold`}>
             <div
-                className={`transition-all duration-200 ${
+                className={`transition-all duration-200 px-2 ${
                     highlightPart === "numerator"
-                        ? "text-[#62D0AD] scale-110 bg-[rgba(98,208,173,0.15)] px-3 rounded"
-                        : "text-[#62D0AD]"
+                        ? "scale-110 rounded"
+                        : ""
                 }`}
+                style={{
+                    color: NUMERATOR_COLOR,
+                    backgroundColor: highlightPart === "numerator" ? NUMERATOR_BG : "transparent",
+                }}
             >
                 {numerator}
             </div>
-            <div className="w-full h-1 bg-slate-400 my-1 rounded"></div>
+            <div className="w-full h-1 bg-slate-700 my-1 rounded"></div>
             <div
-                className={`transition-all duration-200 ${
+                className={`transition-all duration-200 px-2 ${
                     highlightPart === "denominator"
-                        ? "text-[#8E90F5] scale-110 bg-[rgba(142,144,245,0.15)] px-3 rounded"
-                        : "text-[#8E90F5]"
+                        ? "scale-110 rounded"
+                        : ""
                 }`}
+                style={{
+                    color: DENOMINATOR_COLOR,
+                    backgroundColor: highlightPart === "denominator" ? DENOMINATOR_BG : "transparent",
+                }}
             >
                 {denominator}
             </div>
@@ -211,21 +226,48 @@ function ReactiveFractionParts() {
         }
     }, [numerator, denominator, setVar]);
 
+    const actualNumerator = Math.min(numerator, denominator);
+    const { simplifiedNum, simplifiedDen, isSimplified, specialName } = getSimplifiedFraction(actualNumerator, denominator);
+
     return (
         <div className="relative">
-            <div className="flex items-center justify-center gap-8">
-                <FractionDisplay
-                    numerator={Math.min(numerator, denominator)}
-                    denominator={denominator}
-                    highlightPart={highlight as "numerator" | "denominator" | ""}
-                    size="large"
-                />
-                <div className="text-4xl text-slate-400">=</div>
-                <PizzaVisualization
-                    totalSlices={denominator}
-                    colouredSlices={Math.min(numerator, denominator)}
-                    size={180}
-                />
+            <div className="flex flex-col items-center gap-4">
+                <div className="flex items-center justify-center gap-6">
+                    <FractionDisplay
+                        numerator={actualNumerator}
+                        denominator={denominator}
+                        highlightPart={highlight as "numerator" | "denominator" | ""}
+                        size="large"
+                    />
+                    {/* Show simplest form if different */}
+                    {!isSimplified && actualNumerator > 0 && (
+                        <>
+                            <div className="text-3xl text-slate-400">=</div>
+                            <FractionDisplay
+                                numerator={simplifiedNum}
+                                denominator={simplifiedDen}
+                                size="large"
+                            />
+                        </>
+                    )}
+                    <div className="text-4xl text-slate-400">=</div>
+                    <PizzaVisualization
+                        totalSlices={denominator}
+                        colouredSlices={actualNumerator}
+                        size={160}
+                    />
+                </div>
+                {/* Show special name or simplest form message */}
+                {specialName && (
+                    <div className="text-lg font-medium text-[#F7B23B]">
+                        That's {specialName}!
+                    </div>
+                )}
+                {!isSimplified && !specialName && actualNumerator > 0 && (
+                    <div className="text-base text-slate-500">
+                        Simplest form: {simplifiedNum}/{simplifiedDen}
+                    </div>
+                )}
             </div>
             <InteractionHintSequence
                 hintKey="fraction-parts-drag"
@@ -233,7 +275,7 @@ function ReactiveFractionParts() {
                     {
                         gesture: "drag-horizontal",
                         label: "Drag the numbers to change",
-                        position: { x: "20%", y: "30%" },
+                        position: { x: "15%", y: "30%" },
                     },
                 ]}
             />
@@ -332,9 +374,9 @@ function ReactiveFractionExplorer() {
             {/* Description and special name */}
             <div className="text-center">
                 <div className="text-slate-600 text-lg">
-                    <span className="text-[#62D0AD] font-bold">{actualNumerator}</span> coloured{" "}
+                    <span style={{ color: NUMERATOR_COLOR }} className="font-bold">{actualNumerator}</span> coloured{" "}
                     {actualNumerator === 1 ? "slice" : "slices"} out of{" "}
-                    <span className="text-[#8E90F5] font-bold">{denominator}</span> total{" "}
+                    <span style={{ color: DENOMINATOR_COLOR }} className="font-bold">{denominator}</span> total{" "}
                     {denominator === 1 ? "slice" : "slices"}
                 </div>
                 {/* Show special name or simplest form message */}
@@ -481,8 +523,8 @@ export const section2Blocks: ReactElement[] = [
                     <InlineLinkedHighlight
                         varName="fractionHighlight"
                         highlightId="numerator"
-                        color="#62D0AD"
-                        bgColor="rgba(98, 208, 173, 0.15)"
+                        color="#D97706"
+                        bgColor="rgba(217, 119, 6, 0.15)"
                     >
                         <strong>The top number is called the NUMERATOR</strong>
                     </InlineLinkedHighlight>
@@ -498,8 +540,8 @@ export const section2Blocks: ReactElement[] = [
                     <InlineLinkedHighlight
                         varName="fractionHighlight"
                         highlightId="denominator"
-                        color="#8E90F5"
-                        bgColor="rgba(142, 144, 245, 0.15)"
+                        color="#1D4ED8"
+                        bgColor="rgba(29, 78, 216, 0.15)"
                     >
                         <strong>The bottom number is called the DENOMINATOR</strong>
                     </InlineLinkedHighlight>
@@ -535,11 +577,11 @@ export const section2Blocks: ReactElement[] = [
         <Block id="fractions-memory-tip" padding="sm">
             <EditableParagraph id="para-fractions-memory-tip" blockId="fractions-memory-tip">
                 <strong>Memory tip:</strong> The{" "}
-                <InlineSpotColor varName="numeratorExample" color="#62D0AD">
+                <InlineSpotColor varName="numeratorExample" color="#D97706">
                     numerator
                 </InlineSpotColor>{" "}
                 is on top and sounds like "number" because it counts how many pieces you have. The{" "}
-                <InlineSpotColor varName="denominatorExample" color="#8E90F5">
+                <InlineSpotColor varName="denominatorExample" color="#1D4ED8">
                     denominator
                 </InlineSpotColor>{" "}
                 is on the bottom and sounds like "down" because it goes down below!

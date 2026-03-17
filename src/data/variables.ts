@@ -104,6 +104,8 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
     },
 
     // Section 2: Parts of a fraction
+    // Using high-contrast colours for colour blind accessibility:
+    // Orange (#D97706) for numerator, Blue (#1D4ED8) for denominator
     numeratorExample: {
         defaultValue: 3,
         type: 'number',
@@ -112,7 +114,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         min: 0,
         max: 8,
         step: 1,
-        color: '#62D0AD',
+        color: '#D97706',
     },
     denominatorExample: {
         defaultValue: 4,
@@ -122,7 +124,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         min: 1,
         max: 8,
         step: 1,
-        color: '#8E90F5',
+        color: '#1D4ED8',
     },
 
     // Section 3: Explorer
@@ -134,7 +136,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         min: 0,
         max: 10,
         step: 1,
-        color: '#62D0AD',
+        color: '#D97706',
     },
     explorerDenominator: {
         defaultValue: 6,
@@ -144,7 +146,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         min: 1,
         max: 10,
         step: 1,
-        color: '#8E90F5',
+        color: '#1D4ED8',
     },
 
     // Section 4: Quiz answers
@@ -155,7 +157,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for numerator identification',
         placeholder: '?',
         correctAnswer: '2',
-        color: '#62D0AD',
+        color: '#D97706',
     },
     answerDenominatorQuestion: {
         defaultValue: '',
@@ -164,7 +166,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for denominator identification',
         placeholder: '?',
         correctAnswer: '5',
-        color: '#8E90F5',
+        color: '#1D4ED8',
     },
     answerFractionNumerator: {
         defaultValue: '',
@@ -173,7 +175,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for writing a fraction numerator',
         placeholder: '?',
         correctAnswer: '3',
-        color: '#62D0AD',
+        color: '#D97706',
     },
     answerFractionDenominator: {
         defaultValue: '',
@@ -182,7 +184,7 @@ export const variableDefinitions: Record<string, VariableDefinition> = {
         description: 'Student answer for writing a fraction denominator',
         placeholder: '?',
         correctAnswer: '8',
-        color: '#8E90F5',
+        color: '#1D4ED8',
     },
 
     // Highlight variable for linked highlights
