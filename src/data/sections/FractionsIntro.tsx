@@ -215,6 +215,51 @@ function ReactiveFractionParts() {
 }
 
 // ============================================
+// HELPER: Greatest Common Divisor (for simplifying fractions)
+// ============================================
+function gcd(a: number, b: number): number {
+    if (b === 0) return a;
+    return gcd(b, a % b);
+}
+
+// ============================================
+// HELPER: Get simplified fraction and special names
+// ============================================
+function getSimplifiedFraction(numerator: number, denominator: number): {
+    simplifiedNum: number;
+    simplifiedDen: number;
+    isSimplified: boolean;
+    specialName: string | null;
+} {
+    if (numerator === 0) {
+        return { simplifiedNum: 0, simplifiedDen: 1, isSimplified: true, specialName: "zero" };
+    }
+
+    const divisor = gcd(numerator, denominator);
+    const simplifiedNum = numerator / divisor;
+    const simplifiedDen = denominator / divisor;
+    const isSimplified = numerator === simplifiedNum && denominator === simplifiedDen;
+
+    // Check for special names
+    let specialName: string | null = null;
+    if (simplifiedNum === simplifiedDen) {
+        specialName = "one whole";
+    } else if (simplifiedNum === 1 && simplifiedDen === 2) {
+        specialName = "one half";
+    } else if (simplifiedNum === 1 && simplifiedDen === 3) {
+        specialName = "one third";
+    } else if (simplifiedNum === 2 && simplifiedDen === 3) {
+        specialName = "two thirds";
+    } else if (simplifiedNum === 1 && simplifiedDen === 4) {
+        specialName = "one quarter";
+    } else if (simplifiedNum === 3 && simplifiedDen === 4) {
+        specialName = "three quarters";
+    }
+
+    return { simplifiedNum, simplifiedDen, isSimplified, specialName };
+}
+
+// ============================================
 // REACTIVE EXPLORER FOR SECTION 3
 // ============================================
 function ReactiveFractionExplorer() {
@@ -230,6 +275,7 @@ function ReactiveFractionExplorer() {
     }, [numerator, denominator, setVar]);
 
     const actualNumerator = Math.min(numerator, denominator);
+    const { simplifiedNum, simplifiedDen, isSimplified, specialName } = getSimplifiedFraction(actualNumerator, denominator);
 
     return (
         <div className="relative flex flex-col items-center gap-6 p-6 bg-white rounded-xl">
@@ -244,12 +290,37 @@ function ReactiveFractionExplorer() {
                     denominator={denominator}
                     size="medium"
                 />
+                {/* Show simplest form if different */}
+                {!isSimplified && actualNumerator > 0 && (
+                    <>
+                        <div className="text-3xl text-slate-400">=</div>
+                        <FractionDisplay
+                            numerator={simplifiedNum}
+                            denominator={simplifiedDen}
+                            size="medium"
+                        />
+                    </>
+                )}
+            </div>
+            {/* Description and special name */}
+            <div className="text-center">
                 <div className="text-slate-600 text-lg">
                     <span className="text-[#62D0AD] font-bold">{actualNumerator}</span> coloured{" "}
                     {actualNumerator === 1 ? "slice" : "slices"} out of{" "}
                     <span className="text-[#8E90F5] font-bold">{denominator}</span> total{" "}
                     {denominator === 1 ? "slice" : "slices"}
                 </div>
+                {/* Show special name or simplest form message */}
+                {specialName && (
+                    <div className="mt-2 text-lg font-medium text-[#F7B23B]">
+                        That's {specialName}!
+                    </div>
+                )}
+                {!isSimplified && !specialName && actualNumerator > 0 && (
+                    <div className="mt-2 text-base text-slate-500">
+                        Simplest form: {simplifiedNum}/{simplifiedDen}
+                    </div>
+                )}
             </div>
             <InteractionHintSequence
                 hintKey="fraction-explorer-drag"
@@ -504,9 +575,9 @@ export const section3Blocks: ReactElement[] = [
                 id="para-fractions-explore-questions"
                 blockId="fractions-explore-questions"
             >
-                <strong>Think about this:</strong> What happens when you make the numerator the
-                same as the denominator? The whole pizza is coloured! That means the fraction
-                equals one whole.
+                <strong>Things to discover:</strong> Try making 3 out of 6 slices coloured.
+                Notice how it shows "one half" because 3/6 is the same as 1/2! Can you find
+                other fractions that equal one half? What happens when all the slices are coloured?
             </EditableParagraph>
         </Block>
     </StackLayout>,
