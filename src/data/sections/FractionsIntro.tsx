@@ -80,11 +80,20 @@ function PizzaVisualization({
                 cy={centerY}
                 r={radius}
                 fill="#fef3c7"
-                stroke="#f59e0b"
-                strokeWidth="4"
+                stroke="#1e293b"
+                strokeWidth="3"
             />
             {/* Pizza slices */}
             {slices}
+            {/* Outer black border circle */}
+            <circle
+                cx={centerX}
+                cy={centerY}
+                r={radius}
+                fill="none"
+                stroke="#1e293b"
+                strokeWidth="3"
+            />
             {/* Center dot */}
             <circle cx={centerX} cy={centerY} r="4" fill="#94a3b8" />
         </svg>
